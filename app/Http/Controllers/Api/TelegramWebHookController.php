@@ -126,7 +126,7 @@ class TelegramWebHookController extends Controller
         );
 
         if (!$result->isEmpty()) {
-            Cache::put($key, $result->toArray());
+            Cache::put($key, $result->toArray(), 600);
         } else {
             Cache::delete($key);
         }
