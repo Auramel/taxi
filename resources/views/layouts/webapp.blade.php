@@ -35,7 +35,7 @@
                 telegram.WebApp.ready();
                 window.tgUser = user;
             } else {
-                if (location.href !== 'https://bot.communitybooster.online/webapp/error') {
+                if (location.href !== 'https://cr76759.tw1.ru/public/webapp/error') {
                     location.href = '{{ route('webapp.error') }}';
                 }
             }
