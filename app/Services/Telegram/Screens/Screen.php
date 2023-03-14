@@ -61,12 +61,12 @@ abstract class Screen
     }
 
     public function next(
-        int $screenId,
+        string $screen,
         ?string $method = null,
     ): ScreenResult
     {
         return ScreenResult::next(
-            name: static::class,
+            name: $screen,
             method: $method,
             data: $this->data,
         );
@@ -87,7 +87,6 @@ abstract class Screen
     }
 
     public function redirect(
-        int $screenId,
         string $screen,
         ?string $method = null,
         array $data = []
@@ -108,7 +107,34 @@ abstract class Screen
         $this->botApi->sendMessage(
             chatId: $this->tgUser->tid,
             text: $message,
+            parseMode: 'html',
             replyMarkup: $keyboard,
         );
+    }
+
+    protected function url(): string
+    {
+        return env('APP_URL') . '/webapp';
+    }
+
+    protected function getCommandValue(): ?string
+    {
+        $json = json_decode($this->payload->getMessage()?->toJson(), JSON_OBJECT_AS_ARRAY);
+
+        if (is_null($json)) {
+            return null;
+        }
+
+        $message = $this->payload->getMessage()->getText();
+
+        if ($message[0] === '/') {
+            $result = substr($message, $json['entities'][0]['length']);
+        } else {
+            $result = $message;
+        }
+
+        return (strlen($result) > 0)
+            ? $result
+            : null;
     }
 }

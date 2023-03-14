@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\TgHashRoute;
 use App\Models\TgUser;
+use App\Services\ReferralService;
 use App\Services\Telegram\HashRoute;
 use App\Services\Telegram\ScreenResult;
 use App\Services\Telegram\Screens\CommandNotFoundScreen;
@@ -30,6 +31,7 @@ class TelegramWebHookController extends Controller
             $this->botApi = new BotApi($telegramToken);
             $this->payload = Update::fromResponse($request->all());
             $this->tgUser = $this->checkTgUser();
+            $this->checkReferral();
 
             if (!is_null($this->tgUser->banned_at)) {
                 throw new AccessDeniedHttpException();
@@ -63,9 +65,49 @@ class TelegramWebHookController extends Controller
         $tgUser->username = $from->getUsername();
         $tgUser->first_name = $from->getFirstName();
         $tgUser->last_name = $from->getLastName();
+
+        if (is_null($tgUser->referral_hash)) {
+            $tgUser->referral_hash = TgUser::generateReferralHash();
+        }
+
         $tgUser->save();
 
         return $tgUser;
+    }
+
+    public function checkReferral()
+    {
+        $message = $this->payload->getMessage()?->getText() ?? '';
+
+        if (empty($message)) {
+            return;
+        }
+
+        $commands = explode(' ', $message);
+
+        if (array_key_exists(1, $commands)) {
+            $hash = $commands[1];
+
+            $tgUser = TgUser::whereReferralHash($hash)
+                ->first();
+
+            if (is_null($tgUser)) {
+                return;
+            }
+
+            $fromTgUser = TgUser::whereReferralHash($hash)
+                ->first();
+
+            if (is_null($fromTgUser)) {
+                return;
+            }
+
+            $referralService = new ReferralService();
+            $referralService->create(
+                incomeTgUser: $this->tgUser,
+                fromTgUser: $fromTgUser,
+            );
+        }
     }
 
     private function route()
@@ -79,6 +121,8 @@ class TelegramWebHookController extends Controller
 
         if (!is_null($message)) {
             $command = $message->getText();
+            $command = explode(' ', $command);
+            $command = $command[0];
 
             $routes = config('tg_routes');
             $route = $routes[$command] ?? null;

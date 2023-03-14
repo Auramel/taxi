@@ -8,3 +8,11 @@ Route::get('/', function () {
 });
 
 Route::get('logs', [LogViewerController::class, 'index']);
+
+Route::get('/test', function () {
+    $botApi = new \Auramel\TelegramBotApi\BotApi(env('TELEGRAM_TOKEN'));
+    $tgUser = \App\Models\TgUser::whereId(1)
+        ->first();
+
+    $botApi->sendMessage($tgUser->tid, 'пидорасина');
+});

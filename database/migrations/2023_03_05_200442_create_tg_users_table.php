@@ -15,6 +15,8 @@ return new class extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->dateTime('banned_at')->nullable();
+            $table->string('driver_id')->nullable();
+            $table->string('referral_hash');
             $table->timestamps();
             $table->softDeletes();
         });
