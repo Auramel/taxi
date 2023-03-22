@@ -21,14 +21,6 @@
         'Розовый',
     ];
 
-    $transmissions = [
-        'unknown',
-        'mechanical',
-        'automatic',
-        'robotic',
-        'variator',
-    ];
-
     @endphp
 
     <form
@@ -116,23 +108,6 @@
                         placeholder="E-klasse"
                         required
                     >
-                </div>
-
-                <div class="mb-4">
-                    <label class="form-label">
-                        Тип коробки передач
-                    </label>
-
-                    <select
-                        name="transmission"
-                        class="form-control"
-                    >
-                        @foreach ($transmissions as $transmission)
-                        <option value="{{ $transmission }}">
-                            {{ $transmission }}
-                        </option>
-                        @endforeach
-                    </select>
                 </div>
 
                 <div class="mb-4">

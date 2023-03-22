@@ -34,7 +34,7 @@ class SelectShiftScreen extends Screen
                         screen: SelectShiftScreen::class,
                         method: 'changeLimit',
                         data: [
-                            'limit' => '50000',
+                            'limit' => '10',
                         ],
                     ),
                 ],
@@ -46,7 +46,7 @@ class SelectShiftScreen extends Screen
                         screen: SelectShiftScreen::class,
                         method: 'changeLimit',
                         data: [
-                            'limit' => '10',
+                            'limit' => '50000',
                         ],
                     ),
                 ],

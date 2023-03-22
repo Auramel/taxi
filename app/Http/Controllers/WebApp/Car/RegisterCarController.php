@@ -45,7 +45,7 @@ class RegisterCarController extends Controller
                     'brand' => $requestParameters['brand'],
                     'color' => $requestParameters['color'],
                     'model' => $requestParameters['model'],
-                    'transmission' => $requestParameters['transmission'],
+                    'transmission' => 'unknown',
                     'vin' => $requestParameters['vin'],
                     'year' => (int) $requestParameters['year'],
                 ],
