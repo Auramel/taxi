@@ -15,7 +15,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Throwable;
 
 class TelegramWebHookController extends Controller
@@ -34,7 +33,11 @@ class TelegramWebHookController extends Controller
             $this->checkReferral();
 
             if (!is_null($this->tgUser->banned_at)) {
-                throw new AccessDeniedHttpException();
+                $this->botApi->sendMessage(
+                    $this->tgUser->tid,
+                    'Вы забанены',
+                );
+                return response()->json([]);
             }
 
             $this->route();

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
@@ -25,5 +26,10 @@ class TgUser extends Model
         } while (!empty($tgUser));
 
         return $code;
+    }
+
+    public function referrals(): HasMany
+    {
+        return $this->hasMany(Referral::class, 'from_tg_user_id', 'id');
     }
 }
