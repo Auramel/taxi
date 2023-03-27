@@ -4,15 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\TgUser;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UsersController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $users = TgUser::paginate();
+        $search = $request->get('search');
+
+        $users = TgUser::when(!empty($search), function (Builder $builder) use ($search) {
+            $builder->where(function (Builder $builder) use ($search) {
+                $builder->where('first_name', 'like', '%' . $search . '%')
+                    ->orWhere('last_name', 'like', '%' . $search . '%')
+                    ->orWhere('username', 'like', '%' . $search . '%')
+                    ->orWhere('phone', 'like', '%' . $search . '%');
+            });
+        })
+            ->paginate();
 
         return view('users.list', [
             'users' => $users,

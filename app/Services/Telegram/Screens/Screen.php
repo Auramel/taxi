@@ -6,9 +6,10 @@ use App\Models\TgHashRoute;
 use App\Models\TgUser;
 use App\Services\Telegram\HashRoute;
 use App\Services\Telegram\ScreenResult;
+use Auramel\TelegramBotApi\BaseType;
 use Auramel\TelegramBotApi\BotApi;
-use Auramel\TelegramBotApi\Types\Inline\InlineKeyboardMarkup;
 use Auramel\TelegramBotApi\Types\Update;
+use Illuminate\Support\Facades\Log;
 
 abstract class Screen
 {
@@ -101,7 +102,7 @@ abstract class Screen
 
     protected function sendMessage(
         string $message,
-        ?InlineKeyboardMarkup $keyboard = null,
+        ?BaseType $keyboard = null,
     )
     {
         $this->botApi->sendMessage(

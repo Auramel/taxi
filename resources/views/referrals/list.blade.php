@@ -27,37 +27,39 @@
 @else
 <table class="table table-striped align-middle">
     <thead>
-    <th>
-        #
-    </th>
+        <tr>
+            <th>
+                #
+            </th>
 
-    <th>
-        Кто пригласил (имя)
-    </th>
+            <th>
+                Кто пригласил (имя)
+            </th>
 
-    <th>
-        Кто пригласил (забанен)
-    </th>
+            <th>
+                Кто пригласил (забанен)
+            </th>
 
-    <th style="width:200px"></th>
+            <th style="width:200px"></th>
 
-    <th>
-        Кого пригласили (имя)
-    </th>
+            <th>
+                Кого пригласили (имя)
+            </th>
 
-    <th>
-        Кого пригласили (забанен)
-    </th>
+            <th>
+                Кого пригласили (забанен)
+            </th>
 
-    <th>
-        Уровень
-    </th>
+            <th>
+                Уровень
+            </th>
 
-    <th>
-        Дата приглашения
-    </th>
+            <th>
+                Дата приглашения
+            </th>
 
-    <th style="width:200px"></th>
+            <th style="width:200px"></th>
+        </tr>
     </thead>
 
     <tbody>

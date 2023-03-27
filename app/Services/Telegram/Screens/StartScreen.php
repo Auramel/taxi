@@ -2,65 +2,140 @@
 
 namespace App\Services\Telegram\Screens;
 
+use App\Api\Driver\GetDriverByIdApi;
 use App\Services\Telegram\ScreenResult;
 use Auramel\TelegramBotApi\Types\Inline\InlineKeyboardMarkup;
+use Auramel\TelegramBotApi\Types\ReplyKeyboardMarkup;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class StartScreen extends Screen
 {
     public function index(): ScreenResult
     {
         if (is_null($this->tgUser->driver_id)) {
-            $text = 'Для работы с ботом зарегистрируйтесь в парке, Если же вы уже зарегистрированы в парке, то выполните вход по ВУ';
-            $buttons = [
-                [
-                    [
-                        'text' => 'Зарегистрироваться',
-                        'web_app' => [
-                            'url' => $this->url() . '/driver/register',
-                        ],
-                    ],
-                ],
-                [
-                    [
-                        'text' => 'Войти по ВУ',
-                        'callback_data' => $this->callbackButton(EnterByNumberScreen::class),
-                    ],
-                ],
-            ];
-        } else {
-            $text = 'Привет, ' . $this->tgUser->first_name .'!' . PHP_EOL;
-            $text .= 'Для навигации используй кнопки ниже:';
-
-            $buttons = [
-                [
-                    [
-                        'text' => 'Реферальная программа',
-                        'callback_data' => $this->callbackButton(ReferralProgramScreen::class),
-                    ],
-                ],
-                [
-                    [
-                        'text' => 'Добавить авто',
-                        'web_app' => [
-                            'url' => $this->url() . '/car/register',
-                        ],
-                    ],
-                    [
-                        'text' => 'Выбрать авто',
-                        'callback_data' => $this->callbackButton(LinkCarToDriverScreen::class),
-                    ],
-                ],
-                [
-                    [
-                        'text' => 'Выбрать смену',
-                        'callback_data' => $this->callbackButton(SelectShiftScreen::class),
-                    ],
-                ],
-            ];
+            return $this->login();
+        } elseif (is_null($this->tgUser->phone)) {
+            return $this->requestContact();
         }
+
+        return $this->menu();
+    }
+
+    public function login(): ScreenResult
+    {
+        $text = 'Для работы с ботом зарегистрируйтесь в парке, Если же вы уже зарегистрированы в парке, то выполните вход по ВУ';
+        $buttons = [
+            [
+                [
+                    'text' => 'Зарегистрироваться',
+                    'web_app' => [
+                        'url' => $this->url() . '/driver/register',
+                    ],
+                ],
+            ],
+            [
+                [
+                    'text' => 'Войти по ВУ',
+                    'callback_data' => $this->callbackButton(EnterByNumberScreen::class),
+                ],
+            ],
+        ];
 
         $keyboard = new InlineKeyboardMarkup($buttons);
         $this->sendMessage($text, $keyboard);
+
+        return $this->empty();
+    }
+
+    public function menu(): ScreenResult
+    {
+        $text = 'Привет, ' . $this->tgUser->first_name .'!' . PHP_EOL;
+        $text .= 'Для навигации используй кнопки ниже:';
+
+        $buttons = [
+            [
+                [
+                    'text' => 'Реферальная программа',
+                    'callback_data' => $this->callbackButton(ReferralProgramScreen::class),
+                ],
+            ],
+            [
+                [
+                    'text' => 'Добавить авто',
+                    'web_app' => [
+                        'url' => $this->url() . '/car/register',
+                    ],
+                ],
+                [
+                    'text' => 'Выбрать авто',
+                    'callback_data' => $this->callbackButton(LinkCarToDriverScreen::class),
+                ],
+            ],
+            [
+                [
+                    'text' => 'Выбрать смену',
+                    'callback_data' => $this->callbackButton(SelectShiftScreen::class),
+                ],
+            ],
+        ];
+
+        $keyboard = new InlineKeyboardMarkup($buttons);
+        $this->sendMessage($text, $keyboard);
+
+        return $this->empty();
+    }
+
+    public function requestContact(): ScreenResult
+    {
+        $keyboard = new ReplyKeyboardMarkup(
+            keyboard: [
+                [
+                    [
+                        'text' => 'Отправить мои данные',
+                        'request_contact' => true,
+                    ],
+                ],
+            ],
+            oneTimeKeyboard: true,
+            resizeKeyboard: true,
+        );
+
+        $this->sendMessage('Пришлите ваш контакт для подтверждения вашей личности', $keyboard);
+
+        return $this->next(
+            self::class,
+            'verifyContact',
+        );
+    }
+
+    public function verifyContact(): ScreenResult
+    {
+        try {
+            $parameters = [
+                'driver_id' => $this->tgUser->driver_id,
+            ];
+
+            $api = new GetDriverByIdApi();
+            $phone = $api->run($parameters);
+
+            $message = $this->payload->getMessage();
+            $contact = $message->getContact();
+
+            if (
+                $contact->getUserId() !== $this->tgUser->tid
+                || $contact->getPhoneNumber() !== $phone
+            ) {
+                $this->sendMessage('Ваш номер не совпадает с номером указанным в Яндексе. Свяжитесь с менеджером для обновления информации и повторите снова.');
+                return $this->empty();
+            }
+
+            $this->tgUser->phone = $phone;
+            $this->tgUser->save();
+        } catch (Throwable $exception) {
+            $this->sendMessage($exception->getMessage());
+            Log::error($exception);
+        }
 
         return $this->empty();
     }

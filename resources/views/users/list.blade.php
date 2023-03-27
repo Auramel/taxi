@@ -10,7 +10,7 @@
                 name="search"
                 class="form-control"
                 type="text"
-                placeholder="Введите имя, фамилию или username"
+                placeholder="Введите имя, фамилию, телефон или username"
             >
         </div>
 
@@ -24,31 +24,33 @@
 
 <table class="table table-striped align-middle">
     <thead>
-        <th>
-            #
-        </th>
+        <tr>
+            <th>
+                #
+            </th>
 
-        <th>
-            Имя
-        </th>
+            <th>
+                Имя
+            </th>
 
-        <th>
-            Фамилия
-        </th>
+            <th>
+                Фамилия
+            </th>
 
-        <th>
-            Username
-        </th>
+            <th>
+                Username
+            </th>
 
-        <th>
-            Забанен
-        </th>
+            <th>
+                Забанен
+            </th>
 
-        <th>
-            Присоединился
-        </th>
+            <th>
+                Присоединился
+            </th>
 
-        <th style="width:200px"></th>
+            <th style="width:200px"></th>
+        </tr>
     </thead>
 
     <tbody>
