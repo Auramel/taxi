@@ -117,14 +117,14 @@ class StartScreen extends Screen
             ];
 
             $api = new GetDriverByIdApi();
-            $phone = $api->run($parameters);
+            $phone = (int) $api->run($parameters);
             $phonePosition = strpos($phone, '9');
             $phone = substr($phone, $phonePosition);
 
             $message = $this->payload->getMessage();
             $contact = $message->getContact();
 
-            $contactPhone = $contact->getPhoneNumber();
+            $contactPhone = (int) $contact->getPhoneNumber();
             $contactPhonePosition = strpos($contactPhone, '9');
             $contactPhone = substr($contactPhone, $contactPhonePosition);
 
