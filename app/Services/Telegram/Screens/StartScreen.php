@@ -138,6 +138,10 @@ class StartScreen extends Screen
 
             $this->tgUser->phone = $phone;
             $this->tgUser->save();
+
+            $this->sendMessage('Данные успешно подтверждены.');
+
+            return $this->index();
         } catch (Throwable $exception) {
             $this->sendMessage($exception->getMessage());
             Log::error($exception);
