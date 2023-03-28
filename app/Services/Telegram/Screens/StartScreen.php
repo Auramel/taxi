@@ -118,13 +118,19 @@ class StartScreen extends Screen
 
             $api = new GetDriverByIdApi();
             $phone = $api->run($parameters);
+            $phonePosition = strpos($phone, '9');
+            $phone = substr($phone, $phonePosition);
 
             $message = $this->payload->getMessage();
             $contact = $message->getContact();
 
+            $contactPhone = $contact->getPhoneNumber();
+            $contactPhonePosition = strpos($contactPhone, '9');
+            $contactPhone = substr($contactPhone, $contactPhonePosition);
+
             if (
                 $contact->getUserId() !== $this->tgUser->tid
-                || $contact->getPhoneNumber() !== $phone
+                || $contactPhone !== $phone
             ) {
                 $this->sendMessage('Ваш номер не совпадает с номером указанным в Яндексе. Свяжитесь с менеджером для обновления информации и повторите снова.');
                 return $this->empty();
