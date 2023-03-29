@@ -33,4 +33,5 @@ Route::get('/referrals', [ReferralsController::class, 'index'])
 Route::get('/referrals/view/{id}', [ReferralsController::class, 'view'])
     ->name('referrals.view');
 
-Route::get('logs', [LogViewerController::class, 'index']);
+Route::get('logs', [LogViewerController::class, 'index'])
+->withoutMiddleware(CheckUserMiddleware::class);
