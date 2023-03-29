@@ -30,7 +30,7 @@ class StartScreen extends Screen
                 [
                     'text' => 'Зарегистрироваться',
                     'web_app' => [
-                        'url' => $this->url() . '/driver/register',
+                        'url' => 'https://forms.taxiaggregator.ru/add-drivers?uid=0d49c134-565c-4f48-ac04-8f2e1380156b&s=5',
                     ],
                 ],
             ],
