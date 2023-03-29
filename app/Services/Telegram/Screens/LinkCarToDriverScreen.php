@@ -38,13 +38,13 @@ class LinkCarToDriverScreen extends Screen
                 return $this->repeat();
             }
 
+            $this->sendMessage($this->tgUser->driver_id);
+
             $linkCarToDriverApi = new LinkCarToDriverApi();
             $linkCarToDriverApi->run([
                 'car_id' => $carId,
                 'driver_id' => $this->tgUser->driver_id,
             ]);
-
-            $this->sendMessage($this->tgUser->driver_id);
 
             $car = Car::whereCarId($carId)
                 ->whereTgUserId($this->tgUser->id)
