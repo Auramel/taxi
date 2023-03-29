@@ -25,7 +25,10 @@ class TelegramSetWebHookCommand extends Command
         $this->info('RESULT: ' . $result);
 
         $api->setMyCommands([
-            '/start' => 'Меню',
+            [
+                'command' => '/start',
+                'description' => 'Меню',
+            ],
         ]);
 
         return Command::SUCCESS;
