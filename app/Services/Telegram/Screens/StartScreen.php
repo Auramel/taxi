@@ -56,12 +56,6 @@ class StartScreen extends Screen
         $buttons = [
             [
                 [
-                    'text' => 'Реферальная программа',
-                    'callback_data' => $this->callbackButton(ReferralProgramScreen::class),
-                ],
-            ],
-            [
-                [
                     'text' => 'Добавить авто',
                     'web_app' => [
                         'url' => $this->url() . '/car/register',
@@ -131,8 +125,6 @@ class StartScreen extends Screen
             $api = new GetDriverByIdApi();
             $phone = (int) $api->run($parameters);
 
-            $this->sendMessage('Яндекс: ' . $phone);
-
             $phonePosition = strpos($phone, '9');
             $phone = substr($phone, $phonePosition);
 
@@ -140,7 +132,6 @@ class StartScreen extends Screen
             $contact = $message->getContact();
 
             $contactPhone = (int) $contact->getPhoneNumber();
-            $this->sendMessage('Telegram: ' . $contactPhone);
             $contactPhonePosition = strpos($contactPhone, '9');
             $contactPhone = substr($contactPhone, $contactPhonePosition);
 
