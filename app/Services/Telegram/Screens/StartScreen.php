@@ -118,6 +118,9 @@ class StartScreen extends Screen
 
             $api = new GetDriverByIdApi();
             $phone = (int) $api->run($parameters);
+
+            $this->sendMessage('Яндекс: ' . $phone);
+
             $phonePosition = strpos($phone, '9');
             $phone = substr($phone, $phonePosition);
 
@@ -125,6 +128,7 @@ class StartScreen extends Screen
             $contact = $message->getContact();
 
             $contactPhone = (int) $contact->getPhoneNumber();
+            $this->sendMessage('Telegram: ' . $contactPhone);
             $contactPhonePosition = strpos($contactPhone, '9');
             $contactPhone = substr($contactPhone, $contactPhonePosition);
 
