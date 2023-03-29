@@ -74,8 +74,20 @@ class StartScreen extends Screen
             ],
             [
                 [
-                    'text' => 'Выбрать смену',
+                    'text' => 'Выбрать тип оплаты',
                     'callback_data' => $this->callbackButton(SelectShiftScreen::class),
+                ],
+            ],
+            [
+                [
+                    'text' => 'Купить смену',
+                    'callback_data' => $this->callbackButton(
+                        screen: SelectShiftScreen::class,
+                        method: 'changeLimit',
+                        data: [
+                            'limit' => '-800',
+                        ],
+                    ),
                 ],
             ],
         ];

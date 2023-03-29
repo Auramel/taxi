@@ -17,18 +17,6 @@ class SelectShiftScreen extends Screen
         $keyboard = new InlineKeyboardMarkup([
             [
                 [
-                    'text' => 'Купить смену',
-                    'callback_data' => $this->callbackButton(
-                        screen: SelectShiftScreen::class,
-                        method: 'changeLimit',
-                        data: [
-                            'limit' => '-800',
-                        ],
-                    ),
-                ],
-            ],
-            [
-                [
                     'text' => 'Наличные',
                     'callback_data' => $this->callbackButton(
                         screen: SelectShiftScreen::class,
@@ -67,7 +55,7 @@ class SelectShiftScreen extends Screen
                 'balance_limit' => $this->data['limit'],
             ]);
 
-            $this->sendMessage('Лимит изменен');
+            $this->sendMessage('Успешно');
         } catch (Throwable $exception) {
             $this->sendMessage($exception->getMessage());
             Log::error($exception);
