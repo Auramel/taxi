@@ -9,7 +9,6 @@ use App\Services\Telegram\ScreenResult;
 use Auramel\TelegramBotApi\BaseType;
 use Auramel\TelegramBotApi\BotApi;
 use Auramel\TelegramBotApi\Types\Update;
-use Illuminate\Support\Facades\Log;
 
 abstract class Screen
 {

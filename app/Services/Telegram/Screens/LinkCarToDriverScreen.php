@@ -44,6 +44,8 @@ class LinkCarToDriverScreen extends Screen
                 'driver_id' => $this->tgUser->driver_id,
             ]);
 
+            $this->sendMessage($this->tgUser->driver_id);
+
             $car = Car::whereCarId($carId)
                 ->whereTgUserId($this->tgUser->id)
                 ->first();
