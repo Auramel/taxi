@@ -39,6 +39,12 @@ class SelectShiftScreen extends Screen
                     ),
                 ],
             ],
+            [
+                [
+                    'text' => 'Вернуться в меню',
+                    'callback_data' => $this->callbackButton(StartScreen::class)
+                ],
+            ],
         ]);
 
         $this->sendMessage($text, $keyboard);
