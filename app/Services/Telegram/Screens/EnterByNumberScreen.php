@@ -14,7 +14,7 @@ class EnterByNumberScreen extends Screen
         $message = $this->getCommandValue();
 
         if (is_null($message)) {
-            $this->sendMessage('Введите ваше ВУ в формате: 12 12 123456');
+            $this->sendMessage('Введите ваше ВУ в формате: 1212123456');
             return $this->repeat();
         }
 
