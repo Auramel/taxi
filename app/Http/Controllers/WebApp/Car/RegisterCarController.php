@@ -32,10 +32,18 @@ class RegisterCarController extends Controller
         }
 
         try {
+            $callSign = 'car' . Carbon::now()->toDateTimeString();
             $requestParameters = $request->all();
             $bodyParameters = [
                 'park_profile' => [
-                    'callsign' => 'car' . Carbon::now()->toDateTimeString(),
+                    'callsign' => $callSign,
+                    'categories' => [
+                        'econom',
+                        'comfort',
+                        'comfort_plus',
+                        'express',
+                        ''
+                    ],
                     'status' => 'working',
                 ],
                 'vehicle_licenses' => [
@@ -70,6 +78,7 @@ class RegisterCarController extends Controller
                 $car = new Car();
                 $car->car_id = $carId;
                 $car->tg_user_id = $tgUser->id;
+                $car->callsign = $callSign;
                 $car->save();
             }
         } catch (Throwable $exception) {

@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 abstract class Api
 {
     protected Client $client;
+    protected array $data;
 
     public function __construct()
     {
@@ -15,6 +16,11 @@ abstract class Api
     }
 
     abstract public function run(array $parameters): string;
+
+    public function getData(): array
+    {
+        return $this->data;
+    }
 
     protected function getHeaders(): array
     {

@@ -52,6 +52,7 @@ class LinkCarToDriverScreen extends Screen
                 $car = new Car();
                 $car->car_id = $carId;
                 $car->tg_user_id = $this->tgUser->id;
+                $car->callsign = $selectCarByVinApi->getData()['callsign'];
                 $car->save();
             }
 

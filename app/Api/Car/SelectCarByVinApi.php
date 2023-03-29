@@ -31,6 +31,7 @@ class SelectCarByVinApi extends Api
             return '';
         }
 
+        $this->data['callsign'] = $cars[0]['callsign'];
         return $cars[0]['id'];
     }
 }
