@@ -27,6 +27,14 @@ Route::get('/users/view/{id}/ban', [UsersController::class, 'ban'])
     ->name('users.ban');
 Route::get('/users/view/{id}/unban', [UsersController::class, 'unban'])
     ->name('users.unban');
+Route::get('/users/delete/{id}', [UsersController::class, 'delete'])
+    ->name('users.delete');
+Route::get('/users/reset/phone/{id}', [UsersController::class, 'resetPhone'])
+    ->name('users.reset.phone');
+Route::get('/users/reset/yandex/{id}', [UsersController::class, 'resetYandexId'])
+    ->name('users.reset.yandex');
+Route::get('/users/{id}/debt/{hasDebt}', [UsersController::class, 'changeHasDebt'])
+    ->name('users.debt');
 
 Route::get('/referrals', [ReferralsController::class, 'index'])
     ->name('referrals.list');

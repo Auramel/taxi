@@ -7,7 +7,7 @@
     Telegram
 </h2>
 
-<div class="mb-4">
+<div class="btn-group mb-4">
     @if (!is_null($user->banned_at))
     <a
         class="btn btn-success"
@@ -21,6 +21,42 @@
         href="{{ route('users.ban', ['id' => $user->id]) }}"
     >
         Забанить
+    </a>
+    @endif
+    <a
+        class="btn btn-danger"
+        href="{{ route('users.delete', ['id' => $user->id]) }}"
+    >
+        Удалить
+    </a>
+
+    <a
+        class="btn btn-danger"
+        href="{{ route('users.reset.phone', ['id' => $user->id]) }}"
+    >
+        Сбросить номер
+    </a>
+
+    <a
+        class="btn btn-danger"
+        href="{{ route('users.reset.yandex', ['id' => $user->id]) }}"
+    >
+        Сбросить Яндекс ID
+    </a>
+
+    @if ($user->has_debt === 0)
+    <a
+        class="btn btn-primary"
+        href="{{ route('users.debt', ['id' => $user->id, 'hasDebt' => 1]) }}"
+    >
+        Дать доступ к смене в долг
+    </a>
+    @else
+    <a
+        class="btn btn-danger"
+        href="{{ route('users.debt', ['id' => $user->id, 'hasDebt' => 0]) }}"
+    >
+        Убрать доступ к смене в долг
     </a>
     @endif
 </div>
@@ -93,6 +129,18 @@
 
             <td>
                 {{ $user->driver_id ?? '-' }}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <b>
+                    Доступ к покупке смены в долг
+                </b>
+            </td>
+
+            <td>
+                {{ $user->has_debt ? 'Да' : 'Нет' }}
             </td>
         </tr>
 

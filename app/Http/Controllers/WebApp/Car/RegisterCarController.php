@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\WebApp\Car;
 
+use App\Api\Car\LinkCarToDriverApi;
 use App\Api\Car\RegisterCarApi;
 use App\Http\Controllers\Controller;
 use App\Models\Car;
@@ -54,6 +55,12 @@ class RegisterCarController extends Controller
             $errors = [];
             $registerCarApi = new RegisterCarApi();
             $carId = $registerCarApi->run($bodyParameters);
+
+            $linkCarToDriverApi = new LinkCarToDriverApi();
+            $linkCarToDriverApi->run([
+                'driver_id' => $tgUser->driver_id,
+                'car_id' => $carId,
+            ]);
 
             $car = Car::whereCarId($carId)
                 ->whereTgUserId($tgUser->id)

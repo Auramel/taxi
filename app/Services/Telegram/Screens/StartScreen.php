@@ -72,9 +72,12 @@ class StartScreen extends Screen
                     'callback_data' => $this->callbackButton(SelectShiftScreen::class),
                 ],
             ],
-            [
+        ];
+
+        if ($this->tgUser->has_debt === 1) {
+            $buttons[] = [
                 [
-                    'text' => 'Купить смену',
+                    'text' => 'Купить смену в долг',
                     'callback_data' => $this->callbackButton(
                         screen: SelectShiftScreen::class,
                         method: 'changeLimit',
@@ -83,8 +86,8 @@ class StartScreen extends Screen
                         ],
                     ),
                 ],
-            ],
-        ];
+            ];
+        }
 
         $keyboard = new InlineKeyboardMarkup($buttons);
         $this->sendMessage($text, $keyboard);
