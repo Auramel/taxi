@@ -41,8 +41,11 @@ class RegisterCarController extends Controller
                         'econom',
                         'comfort',
                         'comfort_plus',
+                        'business',
+                        'start',
+                        'standard',
+                        'child_tariff',
                         'express',
-                        ''
                     ],
                     'status' => 'working',
                 ],
