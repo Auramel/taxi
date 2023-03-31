@@ -29,7 +29,7 @@ class SelectShiftScreen extends Screen
             ],
             [
                 [
-                    'text' => 'Безналичная оплата>',
+                    'text' => 'Безналичная оплата',
                     'callback_data' => $this->callbackButton(
                         screen: SelectShiftScreen::class,
                         method: 'changeLimit',
