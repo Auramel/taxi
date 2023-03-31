@@ -17,7 +17,7 @@ class SelectShiftScreen extends Screen
         $keyboard = new InlineKeyboardMarkup([
             [
                 [
-                    'text' => 'Наличные',
+                    'text' => 'Наличная и безналичная оплата',
                     'callback_data' => $this->callbackButton(
                         screen: SelectShiftScreen::class,
                         method: 'changeLimit',
@@ -29,7 +29,7 @@ class SelectShiftScreen extends Screen
             ],
             [
                 [
-                    'text' => 'Безналичные',
+                    'text' => 'Безналичная оплата>',
                     'callback_data' => $this->callbackButton(
                         screen: SelectShiftScreen::class,
                         method: 'changeLimit',
