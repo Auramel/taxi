@@ -82,7 +82,7 @@ class StartScreen extends Screen
                         screen: SelectShiftScreen::class,
                         method: 'changeLimit',
                         data: [
-                            'limit' => '-800',
+                            'limit' => '-950',
                         ],
                     ),
                 ],
