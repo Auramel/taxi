@@ -25,12 +25,12 @@ class LinkCarToDriverScreen extends Screen
                 'query' => [
                     'text' => $message,
                     'park' => [
-                        'id' => env('PARK_ID'),
+                        'id' => $this->tgUser->taxopark->park_id,
                     ],
                 ],
             ];
 
-            $selectCarByVinApi = new SelectCarByVinApi();
+            $selectCarByVinApi = new SelectCarByVinApi($this->tgUser->taxopark);
             $carId = $selectCarByVinApi->run($parameters);
 
             if (empty($carId)) {
@@ -40,7 +40,7 @@ class LinkCarToDriverScreen extends Screen
 
             $this->sendMessage($this->tgUser->driver_id);
 
-            $linkCarToDriverApi = new LinkCarToDriverApi();
+            $linkCarToDriverApi = new LinkCarToDriverApi($this->tgUser->taxopark);
             $linkCarToDriverApi->run([
                 'car_id' => $carId,
                 'driver_id' => $this->tgUser->driver_id,

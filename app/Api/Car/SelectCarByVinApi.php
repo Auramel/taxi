@@ -21,7 +21,7 @@ class SelectCarByVinApi extends Api
         );
 
         $result = json_decode($result->getBody(), JSON_OBJECT_AS_ARRAY);
-
+        $this->data = $result;
         $cars = $result['cars'] ?? [];
 
         if (

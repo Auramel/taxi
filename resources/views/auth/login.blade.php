@@ -14,6 +14,7 @@
 
             <div class="mb-4">
                 <input
+                    type="password"
                     class="form-control"
                     name="password"
                     placeholder="Пароль"

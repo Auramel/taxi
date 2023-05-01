@@ -61,10 +61,10 @@ class RegisterCarController extends Controller
             ];
 
             $errors = [];
-            $registerCarApi = new RegisterCarApi();
+            $registerCarApi = new RegisterCarApi($tgUser->taxopark);
             $carId = $registerCarApi->run($bodyParameters);
 
-            $linkCarToDriverApi = new LinkCarToDriverApi();
+            $linkCarToDriverApi = new LinkCarToDriverApi($tgUser->taxopark);
             $linkCarToDriverApi->run([
                 'driver_id' => $tgUser->driver_id,
                 'car_id' => $carId,

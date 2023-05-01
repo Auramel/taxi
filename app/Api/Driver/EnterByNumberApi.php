@@ -21,7 +21,7 @@ class EnterByNumberApi extends Api
         );
 
         $result = json_decode($result->getBody(), JSON_OBJECT_AS_ARRAY);
-
+        $this->data = $result;
         $drivers = $result['driver_profiles'] ?? [];
 
         if (

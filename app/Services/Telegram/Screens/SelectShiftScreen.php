@@ -55,7 +55,7 @@ class SelectShiftScreen extends Screen
     public function changeLimit(): ScreenResult
     {
         try {
-            $changeBalanceLimitApi = new ChangeBalanceLimitApi();
+            $changeBalanceLimitApi = new ChangeBalanceLimitApi($this->tgUser->taxopark);
             $changeBalanceLimitApi->run([
                 'driver_id' => $this->tgUser->driver_id,
                 'balance_limit' => $this->data['limit'],

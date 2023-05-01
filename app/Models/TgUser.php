@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -31,5 +32,10 @@ class TgUser extends Model
     public function referrals(): HasMany
     {
         return $this->hasMany(Referral::class, 'from_tg_user_id', 'id');
+    }
+
+    public function taxopark(): BelongsTo
+    {
+        return $this->belongsTo(Taxopark::class);
     }
 }

@@ -78,7 +78,7 @@ class TelegramWebHookController extends Controller
         return $tgUser;
     }
 
-    public function checkReferral()
+    public function checkReferral(): void
     {
         $message = $this->payload->getMessage()?->getText() ?? '';
 
@@ -113,7 +113,7 @@ class TelegramWebHookController extends Controller
         }
     }
 
-    private function route()
+    private function route(): void
     {
         $message = $this->payload->getMessage();
         $callbackQuery = $this->payload->getCallbackQuery();

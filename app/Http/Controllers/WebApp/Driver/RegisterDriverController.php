@@ -68,7 +68,7 @@ class RegisterDriverController extends Controller
             ];
 
             $errors = [];
-            $registerDriverApi = new RegisterDriverApi();
+            $registerDriverApi = new RegisterDriverApi($tgUser->taxopark);
             $driverId = $registerDriverApi->run($bodyParameters);
 
             $tgUser->driver_id = $driverId;

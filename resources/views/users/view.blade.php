@@ -135,6 +135,24 @@
         <tr>
             <td>
                 <b>
+                    Таксопарк
+                </b>
+            </td>
+
+            <td>
+                @if (!is_null($user->taxopark_id))
+                <a href="{{ route('taxoparks.view', ['id' => $user->taxopark_id]) }}">
+                    {{ $user->taxopark->name }}
+                </a>
+                @else
+                -
+                @endif
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <b>
                     Доступ к покупке смены в долг
                 </b>
             </td>

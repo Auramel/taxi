@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title') Пользователи @endsection
+@section('title') Реферальная программа @endsection
 
 @section('content')
 <div class="mb-4">

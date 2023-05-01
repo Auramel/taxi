@@ -3,6 +3,7 @@
 namespace App\Services\Telegram\Screens;
 
 use App\Api\Driver\GetDriverByIdApi;
+use App\Models\Taxopark;
 use App\Services\Telegram\ScreenResult;
 use Auramel\TelegramBotApi\Types\Inline\InlineKeyboardMarkup;
 use Auramel\TelegramBotApi\Types\ReplyKeyboardMarkup;
@@ -13,7 +14,9 @@ class StartScreen extends Screen
 {
     public function index(): ScreenResult
     {
-        if (is_null($this->tgUser->driver_id)) {
+        if (is_null($this->tgUser->taxopark)) {
+            return $this->selectTaxoPark();
+        } elseif (is_null($this->tgUser->driver_id)) {
             return $this->login();
         } elseif (is_null($this->tgUser->phone)) {
             return $this->requestContact();
@@ -125,7 +128,7 @@ class StartScreen extends Screen
                 'driver_id' => $this->tgUser->driver_id,
             ];
 
-            $api = new GetDriverByIdApi();
+            $api = new GetDriverByIdApi($this->tgUser->taxopark);
             $phone = (int) $api->run($parameters);
 
             $phonePosition = strpos($phone, '9');
@@ -158,5 +161,49 @@ class StartScreen extends Screen
         }
 
         return $this->empty();
+    }
+
+    public function selectTaxopark(): ScreenResult
+    {
+        $buttons = [];
+        $taxoparks = Taxopark::get();
+
+        foreach ($taxoparks as $taxopark) {
+            $buttons[] = [
+                [
+                    'text' => $taxopark->name,
+                    'callback_data' => $this->callbackButton(
+                        screen: StartScreen::class,
+                        method: 'selectTaxopark_',
+                        data: [
+                            'id' => $taxopark->id,
+                        ],
+                    )
+                ],
+            ];
+        }
+
+        $keyboard = new InlineKeyboardMarkup($buttons);
+        $this->sendMessage('Выберете таксопарк', $keyboard);
+        return $this->empty();
+    }
+
+    public function selectTaxopark_(): ScreenResult
+    {
+        $taxoparkId = $this->data['id'];
+        $this->tgUser->taxopark_id = $taxoparkId;
+        $this->tgUser->save();
+
+        $keyboard = new InlineKeyboardMarkup([
+            [
+                [
+                    'text' => 'Меню',
+                    'callback_data' => $this->callbackButton(StartScreen::class),
+                ],
+            ],
+        ]);
+
+        $this->sendMessage('Таксопарк изменен', $keyboard);
+        return $this->next(StartScreen::class);
     }
 }

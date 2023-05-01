@@ -23,12 +23,12 @@ class EnterByNumberScreen extends Screen
                 'query' => [
                     'text' => $message,
                     'park' => [
-                        'id' => env('PARK_ID'),
+                        'id' => $this->tgUser->taxopark->park_id,
                     ],
                 ],
             ];
 
-            $enterByNumberApi = new EnterByNumberApi();
+            $enterByNumberApi = new EnterByNumberApi($this->tgUser->taxopark);
             $driverId = $enterByNumberApi->run($parameters);
 
             if (empty($driverId)) {

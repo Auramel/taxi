@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ParserController;
 use App\Http\Controllers\ReferralsController;
+use App\Http\Controllers\TaxoparksController;
 use App\Http\Controllers\UsersController;
 use App\Http\Middleware\CheckUserMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -41,5 +43,21 @@ Route::get('/referrals', [ReferralsController::class, 'index'])
 Route::get('/referrals/view/{id}', [ReferralsController::class, 'view'])
     ->name('referrals.view');
 
+Route::get('/taxoparks', [TaxoparksController::class, 'index'])
+    ->name('taxoparks.list');
+Route::get('/taxoparks/create', [TaxoparksController::class, 'create'])
+    ->name('taxoparks.create');
+Route::post('/taxoparks/create', [TaxoparksController::class, 'create_'])
+    ->name('taxoparks.create_');
+Route::get('/taxoparks/view/{id}', [TaxoparksController::class, 'view'])
+    ->name('taxoparks.view');
+Route::post('/taxoparks/view/{id}', [TaxoparksController::class, 'view_'])
+    ->name('taxoparks.view_');
+Route::get('/taxoparks/delete/{id}', [TaxoparksController::class, 'delete'])
+    ->name('taxoparks.delete');
+
 Route::get('logs', [LogViewerController::class, 'index'])
-->withoutMiddleware(CheckUserMiddleware::class);
+    ->withoutMiddleware(CheckUserMiddleware::class);
+
+Route::get('/parse', [ParserController::class, 'index'])
+    ->name('parser.list');

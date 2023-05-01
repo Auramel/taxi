@@ -9,6 +9,8 @@ abstract class NavigationItems
         return [
             'Пользователи' => route('users.list'),
             'Реферальная программа' => route('referrals.list'),
+            'Парсер' => route('parser.list'),
+            'Таксопарки' => route('taxoparks.list'),
         ];
     }
 }
