@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\MailParserService;
 use Illuminate\View\View;
+use Webklex\PHPIMAP\Message;
 
 class ParserController extends Controller
 {

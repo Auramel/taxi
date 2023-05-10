@@ -38,7 +38,7 @@
             data-bs-parent="#messages"
         >
             <div class="accordion-body">
-                {!! $message->getHTMLBody() !!}
+                {{ strip_tags($message->getHTMLBody()) }}
             </div>
         </div>
     </div>
