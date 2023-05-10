@@ -27,6 +27,15 @@ class MailParserService
                 'first' => 'Водителю (ВУ:',
                 'last' => 'ограничен доступ к заказам',
             ],
+            'payRequest' => [
+                'first' => 'Запрос на подключение выплат водителю',
+            ],
+            'wantWork' => [
+                'first' => 'Новый водитель хочет работать в вашем таксопарке',
+            ],
+            'new' => [
+                'first' => 'Новый водитель подключился в ваш таксопарк',
+            ],
         ],
         'car' => [
             'openAccess' => [
@@ -84,6 +93,12 @@ class MailParserService
             )
         ) {
             $this->driverChangeAccess($message);
+        } elseif (str_contains($title, $this->strings['driver']['payRequest']['first'])) {
+            $this->driverPayRequest($message);
+        } elseif (str_contains($title, $this->strings['driver']['wantWork']['first'])) {
+            $this->driverPayRequest($message);
+        } elseif (str_contains($title, $this->strings['driver']['new']['first'])) {
+            $this->driverNew($message);
         } else {
             return;
         }
@@ -130,13 +145,78 @@ class MailParserService
         );
     }
 
+    private function driverPayRequest(Message $message): void
+    {
+        $text = $message->getHTMLBody();
+
+        preg_match_all('@[^a-zA-Z]{7,}@is', $text, $matches);
+        $matches = $matches[0];
+
+        foreach ($matches as $key => $match) {
+            $matches[$key] = preg_replace('@[^0-9]@s', '', $match);
+        }
+
+        $matches = array_filter($matches, function ($item) {
+            return !empty($item);
+        });
+
+        $phone = array_shift($matches);
+        $phone = '+7' . $phone;
+
+        $this->sendMessage(
+            phone: $phone,
+            fio: '',
+            message: strip_tags($text),
+        );
+    }
+
+    public function driverNew(Message $message): void
+    {
+        $text = strip_tags($message->getHTMLBody());
+        $array = explode(' ', $text);
+        $fio = $array[19] . ' ' . $array[20] . ' ' . $array[21];
+        $fio = strip_tags($fio);
+        $fio = trim(preg_replace('/\s+/', ' ', $fio));
+
+        $parameters = [
+            'query' => [
+                'text' => $fio,
+                'park' => [
+                    'id' => Taxopark::default()->park_id,
+                ],
+            ],
+        ];
+
+        $this->enterByNumberApi->run($parameters);
+
+        $data = $this->enterByNumberApi->getData();
+        $driverProfiles = $data['driver_profiles'] ?? [];
+
+        if (empty($driverProfiles)) {
+            return;
+        }
+
+        $driverProfile = $driverProfiles[0];
+        $phones = $driverProfile['driver_profile']['phones'] ?? [];
+        $lastPhone = end($phones);
+
+        $this->sendMessage(
+            phone: $lastPhone,
+            fio: $fio,
+            message: $text,
+        );
+    }
+
     private function sendMessage(
         string $phone,
         string $fio,
         string $message,
     ): void
     {
-        Mail::to(env('MAIL_1'))->send(new DemoEmail(
+        $mail = env('MAIL_1');
+//        $mail = 'auramel@yandex.ru';
+
+        Mail::to($mail)->send(new DemoEmail(
             phone: $phone,
             fio: $fio,
             message: $message,
