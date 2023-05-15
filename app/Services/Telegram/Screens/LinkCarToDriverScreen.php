@@ -38,7 +38,8 @@ class LinkCarToDriverScreen extends Screen
                 return $this->repeat();
             }
 
-            $this->sendMessage($this->tgUser->driver_id);
+            $this->sendMessage('DRIVER ID: ' . $this->tgUser->driver_id);
+            $this->sendMessage('CAR ID: ' . $carId);
 
             $linkCarToDriverApi = new LinkCarToDriverApi($this->tgUser->taxopark);
             $linkCarToDriverApi->run([
