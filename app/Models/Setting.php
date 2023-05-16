@@ -61,6 +61,28 @@ class Setting extends Model
 
     public const TAXOPARK_SAVED_TEXT = 'taxopark_saved_text';
 
+    public const HOST_PARSE = 'host_parse';
+
+    public const PORT_PARSE = 'port_parse';
+
+    public const USERNAME_PARSE = 'username_parse';
+
+    public const PASSWORD_PARSE = 'password_parse';
+
+    public const PROTOCOL_PARSE = 'protocol_parse';
+
+    public const HOST_SEND = 'host_send';
+
+    public const PORT_SEND = 'port_send';
+
+    public const USERNAME_SEND = 'username_send';
+
+    public const PASSWORD_SEND = 'password_send';
+
+    public const PROTOCOL_SEND = 'protocol_send';
+
+    public const MAIL_TO = 'mail_to';
+
     protected $table = 'settings';
 
     public static function cardAndCashPaymentText(): string
@@ -243,5 +265,82 @@ class Setting extends Model
         return self::whereName(self::TAXOPARK_SAVED_TEXT)
             ->first()->value
             ?? 'Таксопарк изменен.';
+    }
+
+    public static function hostParse(): string
+    {
+        return self::whereName(self::HOST_PARSE)
+            ->first()->value
+            ?? '';
+    }
+
+    public static function portParse(): string
+    {
+        return self::whereName(self::PORT_PARSE)
+            ->first()->value
+            ?? '';
+    }
+
+    public static function usernameParse(): string
+    {
+        return self::whereName(self::USERNAME_PARSE)
+            ->first()->value
+            ?? '';
+    }
+
+    public static function passwordParse(): string
+    {
+        return self::whereName(self::PASSWORD_PARSE)
+            ->first()->value
+            ?? '';
+    }
+
+    public static function protocolParse(): string
+    {
+        return self::whereName(self::PROTOCOL_PARSE)
+            ->first()->value
+            ?? '';
+    }
+
+    public static function hostSend(): string
+    {
+        return self::whereName(self::HOST_SEND)
+            ->first()->value
+            ?? '';
+    }
+
+    public static function portSend(): string
+    {
+        return self::whereName(self::PORT_SEND)
+            ->first()->value
+            ?? '';
+    }
+
+    public static function usernameSend(): string
+    {
+        return self::whereName(self::USERNAME_SEND)
+            ->first()->value
+            ?? '';
+    }
+
+    public static function passwordSend(): string
+    {
+        return self::whereName(self::PASSWORD_SEND)
+            ->first()->value
+            ?? '';
+    }
+
+    public static function protocolSend(): string
+    {
+        return self::whereName(self::PROTOCOL_SEND)
+            ->first()->value
+            ?? '';
+    }
+
+    public static function mailTo(): string
+    {
+        return self::whereName(self::MAIL_TO)
+            ->first()->value
+            ?? 'auramel@yandex.ru';
     }
 }

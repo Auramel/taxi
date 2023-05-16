@@ -6,9 +6,182 @@
 
 @section('content')
     <form
-            method="post"
-            action="{{ route('settings.view_') }}"
+        method="post"
+        action="{{ route('settings.view_') }}"
     >
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="card-title">
+                    Отправлять письма
+                </h2>
+            </div>
+
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">
+                        Отправлять на почту
+                    </label>
+
+                    <input
+                        name="{{ \App\Models\Setting::MAIL_TO }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::mailTo() }}"
+                        required
+                    >
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="card-title">
+                    Парсер почты
+                </h2>
+            </div>
+
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">
+                        Host
+                    </label>
+
+                    <input
+                        name="{{ \App\Models\Setting::HOST_PARSE }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::hostParse() }}"
+                        required
+                    >
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Port
+                    </label>
+
+                    <input
+                        name="{{ \App\Models\Setting::PORT_PARSE }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::portParse() }}"
+                        required
+                    >
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Username
+                    </label>
+
+                    <input
+                        name="{{ \App\Models\Setting::USERNAME_PARSE }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::usernameParse() }}"
+                        required
+                    >
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Password
+                    </label>
+
+                    <input
+                        name="{{ \App\Models\Setting::PASSWORD_PARSE }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::passwordParse() }}"
+                        required
+                    >
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Protocol
+                    </label>
+
+                    <input
+                        name="{{ \App\Models\Setting::PROTOCOL_PARSE }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::protocolParse() }}"
+                        required
+                    >
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="card-title">
+                    Отправка почты
+                </h2>
+            </div>
+
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">
+                        Host
+                    </label>
+
+                    <input
+                        name="{{ \App\Models\Setting::HOST_SEND }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::hostSend() }}"
+                        required
+                    >
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Port
+                    </label>
+
+                    <input
+                        name="{{ \App\Models\Setting::PORT_SEND }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::portSend() }}"
+                        required
+                    >
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Username
+                    </label>
+
+                    <input
+                        name="{{ \App\Models\Setting::USERNAME_SEND }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::usernameSend() }}"
+                        required
+                    >
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Password
+                    </label>
+
+                    <input
+                        name="{{ \App\Models\Setting::PASSWORD_SEND }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::passwordSend() }}"
+                        required
+                    >
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Protocol
+                    </label>
+
+                    <input
+                        name="{{ \App\Models\Setting::PROTOCOL_SEND }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::protocolSend() }}"
+                        required
+                    >
+                </div>
+            </div>
+        </div>
+
         <div class="card mb-4">
             <div class="card-header">
                 <h2 class="card-title">
@@ -23,10 +196,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::LOGIN_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::loginText() }}"
-                            required
+                        name="{{ \App\Models\Setting::LOGIN_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::loginText() }}"
+                        required
                     >
                 </div>
 
@@ -72,10 +245,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::MENU_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::menuText() }}"
-                            required
+                        name="{{ \App\Models\Setting::MENU_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::menuText() }}"
+                        required
                     >
                 </div>
 
@@ -85,10 +258,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::ADD_CAR_BUTTON_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::addCarButtonText() }}"
-                            required
+                        name="{{ \App\Models\Setting::ADD_CAR_BUTTON_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::addCarButtonText() }}"
+                        required
                     >
                 </div>
 

@@ -4,7 +4,9 @@ namespace App\Services;
 
 use App\Api\Driver\EnterByNumberApi;
 use App\Mail\DemoEmail;
+use App\Models\Setting;
 use App\Models\Taxopark;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use Webklex\IMAP\Facades\Client;
 use Webklex\PHPIMAP\Folder;
@@ -57,6 +59,15 @@ class MailParserService
 
     public function parseMessages(): MessageCollection
     {
+        $config = $this->client->getConfig();
+
+        $config['host'] = Setting::hostParse();
+        $config['port'] = Setting::portParse();
+        $config['username'] = Setting::usernameParse();
+        $config['password'] = Setting::passwordParse();
+        $config['protocol'] = Setting::protocolParse();
+
+        $this->client->setConfig($config);
         $this->client->connect();
         $folders = $this->client->getFolders();
 
@@ -68,9 +79,9 @@ class MailParserService
         foreach ($messages as $message) {
             $flags = $message->getFlags();
 
-            if (!$flags->isEmpty()) {
-                continue;
-            }
+//            if (!$flags->isEmpty()) {
+//                continue;
+//            }
 
             $this->parseMessage($message);
         }
@@ -173,10 +184,13 @@ class MailParserService
     public function driverNew(Message $message): void
     {
         $text = strip_tags($message->getHTMLBody());
-        $array = explode(' ', $text);
-        $fio = $array[19] . ' ' . $array[20] . ' ' . $array[21];
-        $fio = strip_tags($fio);
-        $fio = trim(preg_replace('/\s+/', ' ', $fio));
+        $regex = '/\b[A-ZА-Я][a-zа-я]+\s[A-ZА-Я][a-zа-я]+\s[A-ZА-Я][a-zа-я]+\b/u';
+        preg_match($regex, $text, $match);
+        $fio = $match[0] ?? null;
+
+        if (is_null($fio)) {
+            return;
+        }
 
         $parameters = [
             'query' => [
@@ -207,14 +221,22 @@ class MailParserService
         );
     }
 
-    private function sendMessage(
+    public static function sendMessage(
         string $phone,
         string $fio,
         string $message,
     ): void
     {
-        $mail = env('MAIL_1');
-//        $mail = 'auramel@yandex.ru';
+        $mail = Setting::mailTo();
+
+        $config = Config::get('mail');
+        $config['mailers']['smtp']['host'] = Setting::hostSend();
+        $config['mailers']['smtp']['port'] = Setting::portSend();
+        $config['mailers']['smtp']['username'] = Setting::usernameSend();
+        $config['mailers']['smtp']['password'] = Setting::passwordSend();
+        $config['mailers']['smtp']['transport'] = Setting::protocolSend();
+
+        Config::set('mail', $config);
 
         Mail::to($mail)->send(new DemoEmail(
             phone: $phone,

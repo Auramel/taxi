@@ -24,8 +24,14 @@ class SettingsController extends Controller
         unset($params['_token']);
 
         foreach ($params as $key => $value) {
-            $setting = new Setting();
-            $setting->name = $key;
+            $setting = Setting::whereName($key)
+                ->first();
+
+            if (is_null($setting)) {
+                $setting = new Setting();
+                $setting->name = $key;
+            }
+
             $setting->value = $value;
             $setting->save();
         }
