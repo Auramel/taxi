@@ -79,9 +79,9 @@ class MailParserService
         foreach ($messages as $message) {
             $flags = $message->getFlags();
 
-//            if (!$flags->isEmpty()) {
-//                continue;
-//            }
+            if (!$flags->isEmpty()) {
+                continue;
+            }
 
             $this->parseMessage($message);
         }
