@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ParserController;
 use App\Http\Controllers\ReferralsController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\TaxoparksController;
 use App\Http\Controllers\UsersController;
 use App\Http\Middleware\CheckUserMiddleware;
@@ -55,6 +56,11 @@ Route::post('/taxoparks/view/{id}', [TaxoparksController::class, 'view_'])
     ->name('taxoparks.view_');
 Route::get('/taxoparks/delete/{id}', [TaxoparksController::class, 'delete'])
     ->name('taxoparks.delete');
+
+Route::get('/settings', [SettingsController::class, 'index'])
+    ->name('settings.view');
+Route::post('/settings', [SettingsController::class, 'index_'])
+    ->name('settings.view_');
 
 Route::get('logs', [LogViewerController::class, 'index'])
     ->withoutMiddleware(CheckUserMiddleware::class);

@@ -3,6 +3,7 @@
 namespace App\Services\Telegram\Screens;
 
 use App\Api\Driver\ChangeBalanceLimitApi;
+use App\Models\Setting;
 use App\Services\Telegram\ScreenResult;
 use Auramel\TelegramBotApi\Types\Inline\InlineKeyboardMarkup;
 use Illuminate\Support\Facades\Log;
@@ -17,31 +18,31 @@ class SelectShiftScreen extends Screen
         $keyboard = new InlineKeyboardMarkup([
             [
                 [
-                    'text' => 'Наличная и безналичная оплата',
+                    'text' => Setting::cardAndCashPaymentText(),
                     'callback_data' => $this->callbackButton(
                         screen: SelectShiftScreen::class,
                         method: 'changeLimit',
                         data: [
-                            'limit' => '10',
+                            'limit' => Setting::cardAndCashPaymentValue(),
                         ],
                     ),
                 ],
             ],
             [
                 [
-                    'text' => 'Безналичная оплата',
+                    'text' => Setting::cashPaymentText(),
                     'callback_data' => $this->callbackButton(
                         screen: SelectShiftScreen::class,
                         method: 'changeLimit',
                         data: [
-                            'limit' => '150000',
+                            'limit' => Setting::cashPaymentValue(),
                         ],
                     ),
                 ],
             ],
             [
                 [
-                    'text' => 'Вернуться в меню',
+                    'text' => Setting::backToMenu(),
                     'callback_data' => $this->callbackButton(StartScreen::class)
                 ],
             ],

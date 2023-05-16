@@ -3,6 +3,7 @@
 namespace App\Services\Telegram\Screens;
 
 use App\Api\Driver\EnterByNumberApi;
+use App\Models\Setting;
 use App\Services\Telegram\ScreenResult;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -14,7 +15,7 @@ class EnterByNumberScreen extends Screen
         $message = $this->getCommandValue();
 
         if (is_null($message)) {
-            $this->sendMessage('Введите ваше ВУ в формате: 1212123456');
+            $this->sendMessage(Setting::requestNumberText());
             return $this->repeat();
         }
 
@@ -32,14 +33,14 @@ class EnterByNumberScreen extends Screen
             $driverId = $enterByNumberApi->run($parameters);
 
             if (empty($driverId)) {
-                $this->sendMessage('Профль не найден. Попробуйте снова');
+                $this->sendMessage(Setting::driverNotFoundText());
                 return $this->repeat();
             }
 
             $this->tgUser->driver_id = $driverId;
             $this->tgUser->save();
 
-            $this->sendMessage('Ваш профиль сохранен');
+            $this->sendMessage(Setting::driverSavedText());
 
             $startScreen = new StartScreen(
                 tgUser: $this->tgUser,

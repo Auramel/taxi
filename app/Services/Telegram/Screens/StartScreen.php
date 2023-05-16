@@ -3,6 +3,7 @@
 namespace App\Services\Telegram\Screens;
 
 use App\Api\Driver\GetDriverByIdApi;
+use App\Models\Setting;
 use App\Models\Taxopark;
 use App\Services\Telegram\ScreenResult;
 use Auramel\TelegramBotApi\Types\Inline\InlineKeyboardMarkup;
@@ -27,19 +28,35 @@ class StartScreen extends Screen
 
     public function login(): ScreenResult
     {
-        $text = 'Для работы с ботом зарегистрируйтесь в парке. Если Вы уже зарегистрированы в парке, то выполните вход по ВУ. После регистрации необходимо выполнить вход по ВУ';
+        $brand = env('BRAND');
+
+        if ($brand === 'ufaremzona') {
+            $registerButton = [
+                'text' => Setting::registerButtonText(),
+                'web_app' => [
+                    'url' => 'https://forms.taxiaggregator.ru/add-drivers?uid=0d49c134-565c-4f48-ac04-8f2e1380156b&s=5',
+                ],
+            ];
+        } elseif ($brand === 'taxibotufa02') {
+            $registerButton = [
+                'text' => Setting::registerButtonText(),
+                'url' => 'http://wa.me/79870253005',
+            ];
+        } else {
+            $registerButton = [
+                'text' => Setting::registerButtonText(),
+                'url' => 'https://wa.me/79270390705',
+            ];
+        }
+
+        $text = Setting::loginText();
         $buttons = [
             [
-                [
-                    'text' => 'Зарегистрироваться',
-                    'web_app' => [
-                        'url' => 'https://forms.taxiaggregator.ru/add-drivers?uid=0d49c134-565c-4f48-ac04-8f2e1380156b&s=5',
-                    ],
-                ],
+                $registerButton,
             ],
             [
                 [
-                    'text' => 'Войти по ВУ',
+                    'text' => Setting::loginByNumberButtonText(),
                     'callback_data' => $this->callbackButton(EnterByNumberScreen::class),
                 ],
             ],
@@ -53,25 +70,25 @@ class StartScreen extends Screen
 
     public function menu(): ScreenResult
     {
-        $text = 'Привет, ' . $this->tgUser->first_name .'!' . PHP_EOL;
-        $text .= 'Для навигации используй кнопки ниже:';
+        $text = 'Привет, ' . $this->tgUser->first_name . '!' . PHP_EOL;
+        $text .= Setting::menuText();
 
         $buttons = [
             [
                 [
-                    'text' => 'Добавить авто',
+                    'text' => Setting::addCarButtonText(),
                     'web_app' => [
                         'url' => $this->url() . '/car/register',
                     ],
                 ],
                 [
-                    'text' => 'Выбрать авто',
+                    'text' => Setting::selectCarButtonText(),
                     'callback_data' => $this->callbackButton(LinkCarToDriverScreen::class),
                 ],
             ],
             [
                 [
-                    'text' => 'Выбрать тип оплаты',
+                    'text' => Setting::selectPaymentButtonText(),
                     'callback_data' => $this->callbackButton(SelectShiftScreen::class),
                 ],
             ],
@@ -80,12 +97,12 @@ class StartScreen extends Screen
         if ($this->tgUser->has_debt === 1) {
             $buttons[] = [
                 [
-                    'text' => 'Купить смену в долг',
+                    'text' => Setting::shiftDebtPaymentText(),
                     'callback_data' => $this->callbackButton(
                         screen: SelectShiftScreen::class,
                         method: 'changeLimit',
                         data: [
-                            'limit' => '-950',
+                            'limit' => Setting::shiftDebtPaymentValue(),
                         ],
                     ),
                 ],
@@ -104,7 +121,7 @@ class StartScreen extends Screen
             keyboard: [
                 [
                     [
-                        'text' => 'Отправить мои данные',
+                        'text' => Setting::sendMyContactText(),
                         'request_contact' => true,
                     ],
                 ],
@@ -113,7 +130,7 @@ class StartScreen extends Screen
             resizeKeyboard: true,
         );
 
-        $this->sendMessage('Пришлите ваш контакт для подтверждения вашей личности', $keyboard);
+        $this->sendMessage(Setting::requestContactText(), $keyboard);
 
         return $this->next(
             self::class,
@@ -145,14 +162,14 @@ class StartScreen extends Screen
                 $contact->getUserId() !== $this->tgUser->tid
                 || $contactPhone !== $phone
             ) {
-                $this->sendMessage('Ваш номер не совпадает с номером указанным в Яндексе. Свяжитесь с менеджером для обновления информации и повторите снова.');
+                $this->sendMessage(Setting::phoneNotEqualText());
                 return $this->empty();
             }
 
             $this->tgUser->phone = $phone;
             $this->tgUser->save();
 
-            $this->sendMessage('Данные успешно подтверждены.');
+            $this->sendMessage(Setting::phoneSavedText());
 
             return $this->index();
         } catch (Throwable $exception) {
@@ -184,7 +201,7 @@ class StartScreen extends Screen
         }
 
         $keyboard = new InlineKeyboardMarkup($buttons);
-        $this->sendMessage('Выберете таксопарк', $keyboard);
+        $this->sendMessage(Setting::selectTaxoparkText(), $keyboard);
         return $this->empty();
     }
 
@@ -197,13 +214,13 @@ class StartScreen extends Screen
         $keyboard = new InlineKeyboardMarkup([
             [
                 [
-                    'text' => 'Меню',
+                    'text' => Setting::backToMenu(),
                     'callback_data' => $this->callbackButton(StartScreen::class),
                 ],
             ],
         ]);
 
-        $this->sendMessage('Таксопарк изменен', $keyboard);
+        $this->sendMessage(Setting::taxoparkSavedText(), $keyboard);
         return $this->next(StartScreen::class);
     }
 }

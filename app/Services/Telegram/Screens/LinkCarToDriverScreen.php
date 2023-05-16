@@ -5,6 +5,7 @@ namespace App\Services\Telegram\Screens;
 use App\Api\Car\LinkCarToDriverApi;
 use App\Api\Car\SelectCarByVinApi;
 use App\Models\Car;
+use App\Models\Setting;
 use App\Services\Telegram\ScreenResult;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -16,7 +17,7 @@ class LinkCarToDriverScreen extends Screen
         $message = $this->getCommandValue();
 
         if (is_null($message)) {
-            $this->sendMessage('Введите VIN код или госномер полностью (пример А101АА102)');
+            $this->sendMessage(Setting::requestVinText());
             return $this->repeat();
         }
 
@@ -34,12 +35,9 @@ class LinkCarToDriverScreen extends Screen
             $carId = $selectCarByVinApi->run($parameters);
 
             if (empty($carId)) {
-                $this->sendMessage('Авто не найдено. В диспетчерской с такими данными есть уже несколько автомобилей, поэтому выйдите в меню и нажмите сменить авто, заполните все данные и автомобиль поменяется');
+                $this->sendMessage(Setting::carNotFoundText());
                 return $this->repeat();
             }
-
-            $this->sendMessage('DRIVER ID: ' . $this->tgUser->driver_id);
-            $this->sendMessage('CAR ID: ' . $carId);
 
             $linkCarToDriverApi = new LinkCarToDriverApi($this->tgUser->taxopark);
             $linkCarToDriverApi->run([
@@ -59,7 +57,7 @@ class LinkCarToDriverScreen extends Screen
                 $car->save();
             }
 
-            $this->sendMessage('Авто выбрано');
+            $this->sendMessage(Setting::carSelectedText());
         } catch (Throwable $exception) {
             $this->sendMessage($exception->getMessage());
             Log::error($exception);
