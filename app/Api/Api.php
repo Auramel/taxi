@@ -8,9 +8,10 @@ use Illuminate\Support\Str;
 
 abstract class Api
 {
+    public Taxopark $taxopark;
+
     protected Client $client;
     protected array $data;
-    protected Taxopark $taxopark;
 
     public function __construct(Taxopark $taxopark)
     {
@@ -23,6 +24,11 @@ abstract class Api
     public function getData(): array
     {
         return $this->data;
+    }
+
+    public function setTaxopark(Taxopark $taxopark): void
+    {
+        $this->taxopark = $taxopark;
     }
 
     protected function getHeaders(): array

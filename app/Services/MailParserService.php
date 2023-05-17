@@ -8,6 +8,7 @@ use App\Models\Setting;
 use App\Models\Taxopark;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
+use Throwable;
 use Webklex\IMAP\Facades\Client;
 use Webklex\PHPIMAP\Folder;
 use Webklex\PHPIMAP\Message;
@@ -74,6 +75,7 @@ class MailParserService
         /** @var Folder $folder */
         $folder = $folders[1];
         $messages = $folder->messages()->all()->get();
+        $taxoparks = Taxopark::get();
 
         /** @var Message $message */
         foreach ($messages as $message) {
@@ -83,7 +85,14 @@ class MailParserService
                 continue;
             }
 
-            $this->parseMessage($message);
+            foreach ($taxoparks as $taxopark) {
+                try {
+                    $this->enterByNumberApi->setTaxopark($taxopark);
+                    $this->parseMessage($message);
+                } catch (Throwable $exception) {
+                    continue;
+                }
+            }
         }
 
         return $messages;
@@ -196,7 +205,7 @@ class MailParserService
             'query' => [
                 'text' => $fio,
                 'park' => [
-                    'id' => Taxopark::default()->park_id,
+                    'id' => $this->enterByNumberApi->taxopark->park_id,
                 ],
             ],
         ];
