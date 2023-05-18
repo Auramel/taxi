@@ -50,6 +50,28 @@ class UsersController extends Controller
         ]);
     }
 
+    public function view_(
+        int $id,
+        Request $request,
+    ): RedirectResponse
+    {
+        $user = TgUser::whereId($id)
+            ->first();
+
+        if (is_null($user)) {
+            throw new NotFoundHttpException();
+        }
+
+        $user->card_cash = $request->get('card_cash');
+        $user->cash = $request->get('cash');
+        $user->shift_debt = $request->get('shift_debt');
+        $user->save();
+
+        return redirect()->route('users.view', [
+            'id' => $id,
+        ]);
+    }
+
     public function ban(int $id): RedirectResponse
     {
         $user = TgUser::whereId($id)

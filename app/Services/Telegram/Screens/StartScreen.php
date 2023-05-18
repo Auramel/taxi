@@ -94,6 +94,10 @@ class StartScreen extends Screen
             ],
         ];
 
+        $shiftDebt = ((int) $this->tgUser->shift_debt === 0)
+            ? null
+            : $this->tgUser->shift_debt;
+
         if ($this->tgUser->has_debt === 1) {
             $buttons[] = [
                 [
@@ -102,7 +106,7 @@ class StartScreen extends Screen
                         screen: SelectShiftScreen::class,
                         method: 'changeLimit',
                         data: [
-                            'limit' => Setting::shiftDebtPaymentValue(),
+                            'limit' => $shiftDebt ?? Setting::shiftDebtPaymentValue(),
                         ],
                     ),
                 ],

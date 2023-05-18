@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @mixin IdeHelperSettings
+ * @mixin IdeHelperSetting
  */
 class Setting extends Model
 {

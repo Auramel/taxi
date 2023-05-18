@@ -188,6 +188,60 @@
     </tbody>
 </table>
 
+<form
+    action="{{ route('users.view_', ['id' => $user->id]) }}"
+    method="post"
+    class="mb-4"
+>
+    <div class="mb-3">
+        <label class="form-label">
+            Наличными и картой
+        </label>
+
+        <input
+            name="card_cash"
+            class="form-control"
+            value="{{ $user->card_cash }}"
+            type="number"
+            required
+        >
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">
+            Только картой
+        </label>
+
+        <input
+            name="cash"
+            class="form-control"
+            value="{{ $user->cash }}"
+            type="number"
+            required
+        >
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">
+            Покупка смены в долг
+        </label>
+
+        <input
+            name="shift_debt"
+            class="form-control"
+            value="{{ $user->shift_debt }}"
+            type="number"
+            required
+        >
+    </div>
+
+    @csrf
+
+    <button class="btn btn-success d-block w-100">
+        Сохранить
+    </button>
+</form>
+
 <h2>
     Рефераллы
 </h2>

@@ -15,6 +15,13 @@ class SelectShiftScreen extends Screen
     {
         $text = 'Операции с лимитом профиля';
 
+        $cardAndCash = ((int) $this->tgUser->card_cash === 0)
+            ? null
+            : $this->tgUser->card_cash;
+        $cash = ((int) $this->tgUser->cash === 0)
+            ? null
+            : $this->tgUser->cash;
+
         $keyboard = new InlineKeyboardMarkup([
             [
                 [
@@ -23,7 +30,7 @@ class SelectShiftScreen extends Screen
                         screen: SelectShiftScreen::class,
                         method: 'changeLimit',
                         data: [
-                            'limit' => Setting::cardAndCashPaymentValue(),
+                            'limit' => $cardAndCash ?? Setting::cardAndCashPaymentValue(),
                         ],
                     ),
                 ],
@@ -35,7 +42,7 @@ class SelectShiftScreen extends Screen
                         screen: SelectShiftScreen::class,
                         method: 'changeLimit',
                         data: [
-                            'limit' => Setting::cashPaymentValue(),
+                            'limit' => $cash ?? Setting::cashPaymentValue(),
                         ],
                     ),
                 ],

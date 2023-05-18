@@ -26,6 +26,8 @@ Route::get('/users', [UsersController::class, 'index'])
     ->name('users.list');
 Route::get('/users/view/{id}', [UsersController::class, 'view'])
     ->name('users.view');
+Route::post('/users/view/{id}', [UsersController::class, 'view_'])
+    ->name('users.view_');
 Route::get('/users/view/{id}/ban', [UsersController::class, 'ban'])
     ->name('users.ban');
 Route::get('/users/view/{id}/unban', [UsersController::class, 'unban'])
