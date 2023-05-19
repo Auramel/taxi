@@ -75,7 +75,6 @@ class MailParserService
         /** @var Folder $folder */
         $folder = $folders[1];
         $messages = $folder->messages()->all()->get();
-        $taxoparks = Taxopark::get();
 
         /** @var Message $message */
         foreach ($messages as $message) {
@@ -85,14 +84,7 @@ class MailParserService
                 continue;
             }
 
-            foreach ($taxoparks as $taxopark) {
-                try {
-                    $this->enterByNumberApi->setTaxopark($taxopark);
-                    $this->parseMessage($message);
-                } catch (Throwable $exception) {
-                    continue;
-                }
-            }
+            $this->parseMessage($message);
         }
 
         return $messages;
@@ -101,6 +93,7 @@ class MailParserService
     public function parseMessage(Message $message): void
     {
         $title = $message->getSubject()->toString();
+        $taxoparks = Taxopark::get();
 
         if (
             (
@@ -112,13 +105,27 @@ class MailParserService
                 && str_contains($title, $this->strings['driver']['closeAccess']['last'])
             )
         ) {
-            $this->driverChangeAccess($message);
+            foreach ($taxoparks as $taxopark) {
+                try {
+                    $this->enterByNumberApi->setTaxopark($taxopark);
+                    $this->driverChangeAccess($message);
+                } catch (Throwable) {
+                    continue;
+                }
+            }
         } elseif (str_contains($title, $this->strings['driver']['payRequest']['first'])) {
             $this->driverPayRequest($message);
         } elseif (str_contains($title, $this->strings['driver']['wantWork']['first'])) {
             $this->driverPayRequest($message);
         } elseif (str_contains($title, $this->strings['driver']['new']['first'])) {
-            $this->driverNew($message);
+            foreach ($taxoparks as $taxopark) {
+                try {
+                    $this->enterByNumberApi->setTaxopark($taxopark);
+                    $this->driverNew($message);
+                } catch (Throwable) {
+                    continue;
+                }
+            }
         } else {
             return;
         }
@@ -136,7 +143,7 @@ class MailParserService
             'query' => [
                 'text' => $driverPassport,
                 'park' => [
-                    'id' => env('PARK_ID'),
+                    'id' => $this->enterByNumberApi->taxopark->park_id,
                 ],
             ],
         ];
