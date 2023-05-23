@@ -19,7 +19,7 @@ class Setting extends Model
 
     public const SHIFT_DEBT_PAYMENT_TEXT = 'shift_debt_payment_text';
 
-    public const SHIFT_DEBT_PAYMENT_VALUE = 'shift_debt_payment_text';
+    public const SHIFT_DEBT_PAYMENT_VALUE = 'shift_debt_payment_value';
 
     public const BACK_TO_MENU = 'back_to_menu';
 
