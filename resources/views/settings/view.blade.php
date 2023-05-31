@@ -209,10 +209,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::REGISTER_BUTTON_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::registerButtonText() }}"
-                            required
+                        name="{{ \App\Models\Setting::REGISTER_BUTTON_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::registerButtonText() }}"
+                        required
                     >
                 </div>
 
@@ -222,10 +222,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::LOGIN_BY_NUMBER_BUTTON_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::loginByNumberButtonText() }}"
-                            required
+                        name="{{ \App\Models\Setting::LOGIN_BY_NUMBER_BUTTON_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::loginByNumberButtonText() }}"
+                        required
                     >
                 </div>
             </div>
@@ -258,10 +258,10 @@
                     </label>
 
                     <input
-                        name="{{ \App\Models\Setting::ADD_CAR_BUTTON_TEXT }}"
-                        class="form-control"
-                        value="{{ \App\Models\Setting::addCarButtonText() }}"
-                        required
+                    name="{{ \App\Models\Setting::ADD_CAR_BUTTON_TEXT }}"
+                    class="form-control"
+                    value="{{ \App\Models\Setting::addCarButtonText() }}"
+                    required
                     >
                 </div>
 
@@ -271,10 +271,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::SELECT_CAR_BUTTON_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::selectCarButtonText() }}"
-                            required
+                        name="{{ \App\Models\Setting::SELECT_CAR_BUTTON_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::selectCarButtonText() }}"
+                        required
                     >
                 </div>
 
@@ -284,10 +284,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::SELECT_PAYMENT_BUTTON_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::selectPaymentButtonText() }}"
-                            required
+                        name="{{ \App\Models\Setting::SELECT_PAYMENT_BUTTON_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::selectPaymentButtonText() }}"
+                        required
                     >
                 </div>
 
@@ -297,10 +297,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::SHIFT_DEBT_PAYMENT_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::shiftDebtPaymentText() }}"
-                            required
+                        name="{{ \App\Models\Setting::SHIFT_DEBT_PAYMENT_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::shiftDebtPaymentText() }}"
+                        required
                     >
                 </div>
 
@@ -310,10 +310,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::SHIFT_DEBT_PAYMENT_VALUE }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::shiftDebtPaymentValue() }}"
-                            required
+                        name="{{ \App\Models\Setting::SHIFT_DEBT_PAYMENT_VALUE }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::shiftDebtPaymentValue() }}"
+                        required
                     >
                 </div>
 
@@ -323,10 +323,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::BACK_TO_MENU }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::backToMenu() }}"
-                            required
+                        name="{{ \App\Models\Setting::BACK_TO_MENU }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::backToMenu() }}"
+                        required
                     >
                 </div>
             </div>
@@ -346,10 +346,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::SEND_MY_CONTACT_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::sendMyContactText() }}"
-                            required
+                        name="{{ \App\Models\Setting::SEND_MY_CONTACT_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::sendMyContactText() }}"
+                        required
                     >
                 </div>
 
@@ -359,10 +359,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::REQUEST_CONTACT_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::requestContactText() }}"
-                            required
+                        name="{{ \App\Models\Setting::REQUEST_CONTACT_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::requestContactText() }}"
+                        required
                     >
                 </div>
 
@@ -372,10 +372,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::PHONE_NOT_EQUAL_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::phoneNotEqualText() }}"
-                            required
+                        name="{{ \App\Models\Setting::PHONE_NOT_EQUAL_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::phoneNotEqualText() }}"
+                        required
                     >
                 </div>
 
@@ -385,10 +385,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::PHONE_SAVED_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::phoneSavedText() }}"
-                            required
+                        name="{{ \App\Models\Setting::PHONE_SAVED_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::phoneSavedText() }}"
+                        required
                     >
                 </div>
             </div>
@@ -408,10 +408,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::SELECT_TAXOPARK_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::selectTaxoparkText() }}"
-                            required
+                        name="{{ \App\Models\Setting::SELECT_TAXOPARK_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::selectTaxoparkText() }}"
+                        required
                     >
                 </div>
 
@@ -421,10 +421,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::TAXOPARK_SAVED_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::taxoparkSavedText() }}"
-                            required
+                        name="{{ \App\Models\Setting::TAXOPARK_SAVED_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::taxoparkSavedText() }}"
+                        required
                     >
                 </div>
             </div>
@@ -444,10 +444,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::CARD_AND_CASH_PAYMENT_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::cardAndCashPaymentText() }}"
-                            required
+                        name="{{ \App\Models\Setting::CARD_AND_CASH_PAYMENT_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::cardAndCashPaymentText() }}"
+                        required
                     >
                 </div>
 
@@ -457,10 +457,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::CARD_AND_CASH_PAYMENT_VALUE }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::cardAndCashPaymentValue() }}"
-                            required
+                        name="{{ \App\Models\Setting::CARD_AND_CASH_PAYMENT_VALUE }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::cardAndCashPaymentValue() }}"
+                        required
                     >
                 </div>
 
@@ -470,10 +470,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::CASH_PAYMENT_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::cashPaymentText() }}"
-                            required
+                        name="{{ \App\Models\Setting::CASH_PAYMENT_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::cashPaymentText() }}"
+                        required
                     >
                 </div>
 
@@ -483,10 +483,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::CASH_PAYMENT_VALUE }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::cashPaymentValue() }}"
-                            required
+                        name="{{ \App\Models\Setting::CASH_PAYMENT_VALUE }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::cashPaymentValue() }}"
+                        required
                     >
                 </div>
             </div>
@@ -506,10 +506,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::REQUEST_NUMBER_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::requestNumberText() }}"
-                            required
+                        name="{{ \App\Models\Setting::REQUEST_NUMBER_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::requestNumberText() }}"
+                        required
                     >
                 </div>
 
@@ -519,10 +519,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::DRIVER_NOT_FOUND_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::driverNotFoundText() }}"
-                            required
+                        name="{{ \App\Models\Setting::DRIVER_NOT_FOUND_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::driverNotFoundText() }}"
+                        required
                     >
                 </div>
 
@@ -532,10 +532,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::DRIVER_SAVED_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::driverSavedText() }}"
-                            required
+                        name="{{ \App\Models\Setting::DRIVER_SAVED_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::driverSavedText() }}"
+                        required
                     >
                 </div>
             </div>
@@ -555,10 +555,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::REQUEST_VIN_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::requestVinText() }}"
-                            required
+                        name="{{ \App\Models\Setting::REQUEST_VIN_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::requestVinText() }}"
+                        required
                     >
                 </div>
 
@@ -568,10 +568,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::CAR_NOT_FOUND_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::carNotFoundText() }}"
-                            required
+                        name="{{ \App\Models\Setting::CAR_NOT_FOUND_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::carNotFoundText() }}"
+                        required
                     >
                 </div>
 
@@ -581,10 +581,10 @@
                     </label>
 
                     <input
-                            name="{{ \App\Models\Setting::CAR_SELECTED_TEXT }}"
-                            class="form-control"
-                            value="{{ \App\Models\Setting::carSelectedText() }}"
-                            required
+                        name="{{ \App\Models\Setting::CAR_SELECTED_TEXT }}"
+                        class="form-control"
+                        value="{{ \App\Models\Setting::carSelectedText() }}"
+                        required
                     >
                 </div>
             </div>

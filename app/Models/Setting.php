@@ -15,7 +15,7 @@ class Setting extends Model
 
     public const CASH_PAYMENT_TEXT = 'cash_payment_text';
 
-    public const CASH_PAYMENT_VALUE = 'cash_payment_text';
+    public const CASH_PAYMENT_VALUE = 'cash_payment_value';
 
     public const SHIFT_DEBT_PAYMENT_TEXT = 'shift_debt_payment_text';
 

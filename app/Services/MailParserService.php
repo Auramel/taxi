@@ -243,6 +243,14 @@ class MailParserService
         string $message,
     ): void
     {
+        if (
+            empty($phone)
+            || empty($fio)
+            || empty($message)
+        ) {
+            return;
+        }
+
         $mail = Setting::mailTo();
 
         $config = Config::get('mail');
